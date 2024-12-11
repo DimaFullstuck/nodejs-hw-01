@@ -15,3 +15,4 @@ export const removeLastContact = async () => {
     console.error('Поилка:', error);
   }
 };
+removeLastContact();

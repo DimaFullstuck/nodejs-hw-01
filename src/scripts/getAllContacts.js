@@ -1,3 +1,12 @@
+import { readContacts } from '../utils/readContacts.js';
 export const getAllContacts = async () => {
-  return ['Joann Kuphal', 'Ramiro Dickens'];
+  try {
+    const contacts = await readContacts();
+    return contacts;
+  } catch (error) {
+    console.error('Помилка:', error);
+    return [];
+  }
 };
+
+console.log(await getAllContacts());
