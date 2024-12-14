@@ -1,15 +1,17 @@
+import { PATH_DB } from '../constants/contacts.js';
 import { createFakeContact } from '../utils/createFakeContact.js';
-import { readContacts } from '../utils/readContacts.js';
-import { writeContacts } from '../utils/writeContacts.js';
+import fs from 'node:fs/promises';
 
 export const addOneContact = async () => {
   try {
-    const contacts = await readContacts();
-    const newContacts = createFakeContact();
-    contacts.push(newContacts);
-    await writeContacts(contacts);
-    console.log('Один контакт додано');
+    let contacts = JSON.parse(await fs.readFile(PATH_DB, 'utf8'));
+    let newContact = createFakeContact();
+    contacts.push(newContact);
+
+    await fs.writeFile(PATH_DB, JSON.stringify(contacts, null, 2));
   } catch (error) {
-    console.error('Помилка:', error);
+    console.log('An error occurred:', error);
   }
 };
+
+addOneContact();
