@@ -1,15 +1,20 @@
-import { PATH_DB } from '../constants/contacts.js';
-import fs from 'fs/promises';
+import { readContacts } from '../utils/readContacts.js';
+import { writeContacts } from '../utils/writeContacts.js';
 
 export const removeLastContact = async () => {
   try {
-    let contacts = JSON.parse(await fs.readFile(PATH_DB, 'utf8'));
+    let contacts = await readContacts();
     if (contacts.length > 0) {
-      contacts.splice(contacts.length - 1, 1);
+      contacts.pop();
+      await writeContacts(contacts);
+      console.log('Last contact removed successfully');
+    } else {
+      console.log('No contacts to remove');
     }
-    await fs.writeFile(PATH_DB, JSON.stringify(contacts, null, 2));
+    return contacts;
   } catch (error) {
-    console.log('An error occurred:', error);
+    console.error('Error removing contact:', error);
+    throw error;
   }
 };
 

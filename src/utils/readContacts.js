@@ -6,7 +6,8 @@ export const readContacts = async () => {
     const data = await fs.readFile(PATH_DB, 'utf8');
     const todos = JSON.parse(data);
     return todos;
-  } catch (err) {
-    console.error('Помилка запису у файл:', err);
+  } catch (error) {
+    console.error('Помилка запису у файл:', error);
+    return [];
   }
 };
