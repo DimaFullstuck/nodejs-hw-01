@@ -4,13 +4,15 @@ import { createFakeContact } from '../utils/createFakeContact.js';
 
 export const addOneContact = async () => {
   try {
-    let contacts = await readContacts();
+    const db = await readContacts();
     const newContact = createFakeContact();
-    contacts.push(newContact);
-    await writeContacts(contacts);
-    console.log('New contact added successfully');
-  } catch (err) {
-    console.error('Error:', err);
+
+    db.push(newContact);
+    writeContacts(db);
+    console.log('New contact added.');
+  } catch (error) {
+    console.error('Error adding contact: ', error);
   }
 };
+
 addOneContact();

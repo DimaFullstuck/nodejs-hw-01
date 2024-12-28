@@ -3,18 +3,19 @@ import { writeContacts } from '../utils/writeContacts.js';
 
 export const removeLastContact = async () => {
   try {
-    let contacts = await readContacts();
-    if (contacts.length > 0) {
-      contacts.pop();
-      await writeContacts(contacts);
-      console.log('Last contact removed successfully');
-    } else {
-      console.log('No contacts to remove');
+    const db = await readContacts();
+
+    if (db.length === 0) {
+      console.log('Empty array');
+      return;
     }
-    return contacts;
+
+    db.pop();
+
+    writeContacts(db);
+    console.log('Last contact removed.');
   } catch (error) {
-    console.error('Error removing contact:', error);
-    throw error;
+    console.error('Error removing last contact: ', error);
   }
 };
 

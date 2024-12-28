@@ -2,12 +2,12 @@ import { readContacts } from '../utils/readContacts.js';
 
 export const countContacts = async () => {
   try {
-    const contacts = await readContacts();
-    console.log(`Contacts : ${contacts.length}`);
-    return contacts.length;
+    const db = await readContacts();
+    return db.length;
   } catch (error) {
-    console.error('Error reading contacts:', error);
+    console.error(error);
     return 0;
   }
 };
-countContacts();
+
+console.log(await countContacts());
